@@ -1,0 +1,14 @@
+layer:
+  id: "neighborhood"
+  description: |
+      Zillow Neighborhood boundaries.
+  buffer_size: 4
+  fields:
+    name:
+      description: |
+        Name of neighborhood.
+  datasource:
+    geometry_field: geometry
+    query: (SELECT geometry, name FROM layer_neighborhood(!bbox!, z(!scale_denominator!))) AS t
+schema:
+  - ./layer.sql

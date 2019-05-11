@@ -1,0 +1,20 @@
+layer:
+  id: "tlotd"
+  description: |
+      Filmmaker addresses.
+  buffer_size: 4
+  fields:
+    name:
+      description: |
+        Name of filmmaker.
+    addr:
+      description: |
+          Number portion of street address.
+    street:
+      description: |
+          Street portion of street address.
+  datasource:
+    geometry_field: geometry
+    query: (SELECT geometry, filmmaker, addr, street FROM layer_tlotd(!bbox!, z(!scale_denominator!))) AS t
+schema:
+  - ./layer.sql
