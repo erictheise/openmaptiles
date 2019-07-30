@@ -3,6 +3,7 @@ DROP TRIGGER IF EXISTS trigger_refresh ON place_city.updates;
 
 CREATE EXTENSION IF NOT EXISTS unaccent;
 
+DROP FUNCTION IF EXISTS update_osm_city_point();
 CREATE OR REPLACE FUNCTION update_osm_city_point() RETURNS VOID AS $$
 BEGIN
 
@@ -50,10 +51,12 @@ $$ LANGUAGE plpgsql;
 
 SELECT update_osm_city_point();
 
+DROP INDEX IF EXISTS osm_city_point_rank_idx;
 CREATE INDEX IF NOT EXISTS osm_city_point_rank_idx ON osm_city_point("rank");
 
 -- Handle updates
 
+DROP SCHEMA IF EXISTS place_city CASCADE;
 CREATE SCHEMA IF NOT EXISTS place_city;
 
 CREATE TABLE IF NOT EXISTS place_city.updates(id serial primary key, t text, unique (t));

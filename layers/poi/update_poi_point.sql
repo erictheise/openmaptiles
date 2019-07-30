@@ -2,6 +2,7 @@ DROP TRIGGER IF EXISTS trigger_flag ON osm_poi_point;
 DROP TRIGGER IF EXISTS trigger_refresh ON poi_point.updates;
 
 -- etldoc:  osm_poi_point ->  osm_poi_point
+DROP FUNCTION IF EXISTS update_osm_poi_point();
 CREATE OR REPLACE FUNCTION update_osm_poi_point() RETURNS VOID AS $$
 BEGIN
   UPDATE osm_poi_point
@@ -47,6 +48,7 @@ $$ LANGUAGE plpgsql;
 
 -- Handle updates
 
+DROP SCHEMA IF EXISTS poi_point CASCADE;
 CREATE SCHEMA IF NOT EXISTS poi_point;
 
 CREATE TABLE IF NOT EXISTS poi_point.updates(id serial primary key, t text, unique (t));
